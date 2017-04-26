@@ -8,14 +8,35 @@
 
 import UIKit
 
+//1 - import the UserNotifications framework
+import UserNotifications
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        //2 - Specify your request for authorization.
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (permissionGranted, error) in
+            
+            //3 - Handle your error 
+            print(error as Any)
+        }
+        
+        //18 - 
+        let choiceA = UNNotificationAction(identifier: "y = mx + b", title: "y = mx + b", options: [.foreground])
+        let choiceB = UNNotificationAction(identifier: "Ax + By = C", title: "Ax + By = C", options: [.foreground])
+        let choiceC = UNNotificationAction(identifier: "A = LW", title: "A = LW", options: [.foreground])
+        let choiceD = UNNotificationAction(identifier: "D = rt", title: "D = rt", options: [.foreground])
+        
+        //19 - 
+        let mathQuizCategory = UNNotificationCategory(identifier: "mathQuizCategory", actions: [choiceA, choiceB, choiceC, choiceD], intentIdentifiers: [], options: [])
+        
+        //20 - 
+        UNUserNotificationCenter.current().setNotificationCategories([mathQuizCategory])
+        
         return true
     }
 
